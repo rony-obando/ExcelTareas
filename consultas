@@ -1,0 +1,10 @@
+Use NorthWind
+CREATE FUNCTION fn_ClienteCiudad (@City varchar(30))
+RETURNS table
+AS
+RETURN(select * from Customers where CustomerID =
+ (select top 1 CustomerID from Customers
+where City = @City
+ORDER BY (select * from v_r)))
+
+select * from fn_ClienteCiudad('Berlin')
